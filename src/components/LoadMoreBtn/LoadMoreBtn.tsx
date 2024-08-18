@@ -1,6 +1,11 @@
 import css from './LoadMoreBtn.module.css';
 
-export default function LoadMoreBtn({ page, onClickMore }) {
+type LoadMore = {
+  page: number,
+  onClickMore: (newPage: number) => void;
+}
+
+export default function LoadMoreBtn({ page, onClickMore }: LoadMore) {
   const handleLoadMore = () => {
     onClickMore(page + 1);
   };
@@ -13,7 +18,3 @@ export default function LoadMoreBtn({ page, onClickMore }) {
     </div>
   );
 }
-
-
-
-

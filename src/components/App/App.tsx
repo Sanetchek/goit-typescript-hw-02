@@ -1,5 +1,5 @@
-import { useEffect, useRef, useState } from "react";
-import { searchPhotos } from "../../gallery-api";
+import { useEffect, useState } from "react";
+import { searchPhotos, Photo } from "../../gallery-api";
 
 import css from "./App.module.css";
 
@@ -10,17 +10,17 @@ import Loader from "../Loader/Loader";
 import LoadMoreBtn from "../LoadMoreBtn/LoadMoreBtn";
 import ImageModal from "../ImageModal/ImageModal";
 
-function App() {
-  const [galleryArray, setGalleryArray] = useState([]);
-  const [totalPages, setTotalPages] = useState(0);
-  const [topic, setTopic] = useState('');
-  const [currentPage, setCurrentPage] = useState(1);
-  const [loader, setLoader] = useState(false);
-  const [error, setError] = useState(false);
-  const [modalIsOpen, setModalIsOpen] = useState(false);
-  const [selectedImage, setSelectedImage] = useState("");
+export default function App() {
+  const [galleryArray, setGalleryArray] = useState<Photo[]>([]);
+  const [totalPages, setTotalPages] = useState<number>(0);
+  const [topic, setTopic] = useState<string>('');
+  const [currentPage, setCurrentPage] = useState<number>(1);
+  const [loader, setLoader] = useState<boolean>(false);
+  const [error, setError] = useState<boolean>(false);
+  const [modalIsOpen, setModalIsOpen] = useState<boolean>(false);
+  const [selectedImage, setSelectedImage] = useState<string>("");
 
-  const handleSearch = async (newTopic) => {
+  const handleSearch = async (newTopic: string) => {
     if (newTopic === topic) {
       return;
     }
@@ -31,7 +31,7 @@ function App() {
     setCurrentPage(1);
   };
 
-  const openModal = (imageUrl) => {
+  const openModal = (imageUrl: string) => {
     setSelectedImage(imageUrl);
     setModalIsOpen(true);
   };
@@ -40,6 +40,7 @@ function App() {
     setModalIsOpen(false);
   };
 
+  // Fetch photos whenever the topic or currentPage changes
   useEffect(() => {
     if (topic === '') {
       return;
@@ -56,9 +57,9 @@ function App() {
         setGalleryArray((prevGallery) => {
           return [...prevGallery, ...data.results];
         });
-      } catch (error) {
+      } catch (error: unknown) {
         setError(true);
-        console.log(error.message);
+        console.error((error as Error).message);
       } finally {
         setLoader(false);
       }
@@ -89,13 +90,3 @@ function App() {
     </div>
   );
 }
-
-export default App;
-
-
-
-
-
-
-
-

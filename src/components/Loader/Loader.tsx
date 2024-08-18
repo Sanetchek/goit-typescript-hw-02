@@ -1,7 +1,11 @@
 import { ThreeDots } from "react-loader-spinner";
 import css from "./Loader.module.css";
 
-export default function Loader({ loader }) {
+type LoaderProps = {
+  loader: boolean;
+}
+
+export default function Loader({ loader }: LoaderProps) {
   return (
     <ThreeDots
       visible={loader}
